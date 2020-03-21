@@ -1,14 +1,11 @@
 #!/bin/sh
 DIR=`dirname $0`
 
-docker rm -f jerwa-redis
-docker rm -f jerwa-mongo
-docker rm -f jerwa-api
+docker rm -f db-mongo_1
 
 echo "✅ Start docker ..."
-docker-compose -f $DIR/docker-compose.yml up -d --build jerwa-redis
-docker-compose -f $DIR/docker-compose.yml up -d --build jerwa-mongo
-docker-compose -f $DIR/docker-compose.yml up -d --build jerwa-api
+docker-compose -f $DIR/docker-compose.yml up -d
 
 sleep 5
-docker logs -f jerwa-api
+docker exec -it db-mongo_1 ./root/entrypoint.sh
+docker logs -f db-mongo_1

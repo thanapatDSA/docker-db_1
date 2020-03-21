@@ -2,12 +2,21 @@ version: "3"
 
 services:
   db-mongo_1:
+    image: mongo:4.2.3
     build: mongo/
     ports:
       - "27999:27017"
-    # volumes:
-    #   - ./mongo/data_json:/data/db_import/
+    volumes:
+      - ./mongo/data_json:/data/db_import/
     container_name: db-mongo_1
+  
+  seed-db-mongo:
+    image: mongo:4.2.3
+    depends_on: 
+      - db-mongo_1
+    volumes:
+      - ./mongo/data_json:/data/db_import/
+    container_name: seed-db-mongo
 
 #################### ALPHA ####################
 volumes:
